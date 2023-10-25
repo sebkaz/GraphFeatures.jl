@@ -1,0 +1,13 @@
+name = "GraphFeatures"
+uuid = "c5fe4ea1-89a4-4284-8698-6e8ba3975d5b"
+authors = ["Sebastian Zajac"]
+version = "1.0.0-DEV"
+
+[compat]
+julia = "1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]

@@ -27,12 +27,19 @@ function edge_contr(g::SimpleGraph, ind::Int, comm::AbstractVector{Int})
 end
 
 function cada(g::SimpleGraph, ind::Int, comm::AbstractVector{Int})
-    ek = maximum(values(countmap(comm[neighbors(g, ind)])))
+    neigh = neighbors(g, ind)
+    if isempty(neigh)
+        return 0.0  # lub coś bardziej sensownego dla Twojej logiki
+    end
+    ek = maximum(values(countmap(comm[neigh])))
     degak = degree(g, ind)
-    return degak/ek
+    return degak / ek
 end
 
 function q_dist(clusters)
+    if isempty(clusters)
+        return Float64[]  # lub np. fill(0.0, 0)
+    end
     cs = sort!(unique(clusters))
     @assert cs[1] == 1
     @assert cs[end] == length(cs)
@@ -75,5 +82,6 @@ function distances2_gr(g::SimpleGraph, ind::Int, comm::AbstractVector{Int}, q::V
 end
 
 function avg_neighbor_degree(g::SimpleGraph, ind::Int)
-    return mean(x -> degree(g, x), neighbors(g, ind))
+    neigh = neighbors(g, ind)
+    return isempty(neigh) ? 0.0 : mean(x -> degree(g, x), neigh)
 end
